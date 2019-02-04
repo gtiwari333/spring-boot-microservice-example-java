@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: greeting-service
+eureka:
+    client:
+        service-url:
+            defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+    ## using default URL

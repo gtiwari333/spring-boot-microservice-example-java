@@ -1,0 +1,9 @@
+server:
+    port: 8761
+
+eureka:
+    client: # this is server, disable discovery and register this instance as client
+        registerWithEureka: false
+        fetchRegistry: false
+    server:
+        renewalPercentThreshold: 0.49
