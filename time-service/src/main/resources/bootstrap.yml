@@ -1,7 +1,8 @@
 spring:
     application:
         name: time-service
-eureka:
-    client:
-        service-url:
-            defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+    cloud:
+        config:
+            uri: http://localhost:8888
+
+

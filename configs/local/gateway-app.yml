@@ -1,0 +1,11 @@
+spring:
+  zipkin:
+    baseUrl: http://localhost:9411
+    
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
