@@ -1,7 +1,8 @@
 spring:
     application:
         name: gateway-app
-
+    zipkin:
+        baseUrl: http://localhost:9411
 server:
     port: 8080
 
