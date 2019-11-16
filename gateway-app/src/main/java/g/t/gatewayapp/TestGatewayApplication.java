@@ -31,7 +31,7 @@ public class TestGatewayApplication {
     }
 
     @RestController
-    class GatewayAppController {
+    static class GatewayAppController {
         private final RestTemplate restTemplate;
         private final TimeService timeService;
 
