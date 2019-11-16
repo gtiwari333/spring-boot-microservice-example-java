@@ -20,7 +20,7 @@ public class GreetingServiceApplication {
     @RequestMapping("/api/greeting")
     class API {
 
-        @GetMapping({"/"})
+        @GetMapping({"", "/"})
         public String getMessage() {
             return "Good Morning!!";
         }

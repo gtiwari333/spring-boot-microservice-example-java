@@ -23,7 +23,7 @@ public class TimeServiceApplication {
     @RequestMapping("/api/time")
     class API {
 
-        @GetMapping({  "/"})
+        @GetMapping({"", "/"})
         public Map<String, String> getMessage() {
             return Map.of("servertime", Instant.now().toString());
         }
