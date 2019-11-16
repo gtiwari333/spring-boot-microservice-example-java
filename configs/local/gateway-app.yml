@@ -1,7 +1,7 @@
 spring:
   zipkin:
     baseUrl: http://localhost:9411
-    
+
 server:
   port: 8080
 
@@ -9,3 +9,13 @@ eureka:
   client:
     service-url:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream ## it allows to monitor the stream  http://localhost:8080/actuator/hystrix.stream
