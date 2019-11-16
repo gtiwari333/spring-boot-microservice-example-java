@@ -41,12 +41,7 @@ public class TestGatewayApplication {
         }
 
         @RequestMapping({"/", ""})
-        public String testGateWayTime() {
-            return "This is Gateway app. <a href='/gateway'>Open This </a> to see how this acts as single entry-point for API requests into an application from outside the firewall.";
-        }
-
-        @RequestMapping("/gateway")
-        public String testGateWayGreeting() {
+        public String home() {
             Map<String, String> resp = timeService.getTime();
             String time = resp.get("servertime");
 
