@@ -1,14 +1,16 @@
 ### Microservices system using Spring, Spring Boot and Spring Cloud.
 
 
-#### It contains the following 4 separate applications:
+#### It contains the following applications:
 
-- Spring Cloud Registration and Discovery with Netflix Eureka (module: registration-discovery)
+- Spring Cloud Registration Service Discovery with Netflix Eureka (module: registration-discovery)
+- Spring Cloud Config server (module: config-server)
+- Hystrix
 - Two Microservices:
     - Greeting Service (module: greeting-service)
     - Time Service (module: time-service)
 - Gateway Application (module: gateway-app)
-
+- Supports distributed Tracing with
 
 #### How to Run
 

@@ -1,4 +1,4 @@
-package g.t.gatewayapp;
+package gt.gatewayapp;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package regdist;
+package gt.regdist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
