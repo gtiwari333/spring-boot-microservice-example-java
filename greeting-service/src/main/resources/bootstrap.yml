@@ -5,4 +5,13 @@ spring:
         config:
             uri: http://localhost:8888
 
-
+    security:
+        oauth2:
+            client:
+                provider:
+                    oidc:
+                        issuer-uri: http://localhost:8080/auth/realms/test-spring-ms
+                registration:
+                    oidc:
+                        client-id: note-app-gateway
+                        client-secret: some-secret

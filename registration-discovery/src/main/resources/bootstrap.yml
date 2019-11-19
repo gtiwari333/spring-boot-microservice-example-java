@@ -1,9 +1,9 @@
 server:
-  port: 8761
+    port: 8761
 
 spring:
-  application:
-    name: registration-discovery
+    application:
+        name: registration-discovery
 
 eureka:
     client:
