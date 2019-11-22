@@ -15,3 +15,6 @@ spring:
           oidc:
             client-id: note-app-gateway
             client-secret: some-secret
+
+hystrix:
+  shareSecurityContext: true #this will fix the NULL securitycontext on open feign

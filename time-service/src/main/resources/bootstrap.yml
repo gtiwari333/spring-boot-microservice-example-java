@@ -14,5 +14,5 @@ spring:
             issuer-uri: http://localhost:8080/auth/realms/test-spring-ms
         registration:
           oidc:
-            client-id: note-app-gateway
+            client-id: time-service-client
             client-secret: some-secret
