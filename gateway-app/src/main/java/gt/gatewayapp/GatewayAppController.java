@@ -46,7 +46,7 @@ class GatewayAppController {
 
         String greeting = greetingService.getGreeting();
 
-        return "The server says : " + greeting + ". Server time is " + time + getToken(principal);
+        return "The server says : " + greeting + ". Server time is " + time + "<br/>User JWT Token: " + getToken(principal);
     }
 
     @GetMapping("/jwt")
