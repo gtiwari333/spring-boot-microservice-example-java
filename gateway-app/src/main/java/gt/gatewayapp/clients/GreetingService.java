@@ -19,7 +19,7 @@ public class GreetingService {
     }
 
     private String getDefaultGreeting() {
-        return "Fallback: Hello world";
+        return "Fallback Greeting";
     }
 
 }

@@ -2,6 +2,8 @@ package gt.gatewayapp;
 
 import gt.gatewayapp.clients.GreetingService;
 import gt.gatewayapp.clients.TimeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -18,6 +20,8 @@ import java.util.Map;
 class GatewayAppController {
     private final GreetingService greetingService;
     private final TimeService timeService;
+
+    static final Logger log = LoggerFactory.getLogger(GatewayAppController.class);
 
     GatewayAppController(GreetingService greetingService, TimeService timeService) {
         this.greetingService = greetingService;
@@ -40,13 +44,14 @@ class GatewayAppController {
     public String getGreeting(Principal principal) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        System.out.println(authentication);
+        log.info("User auth object: {}", authentication);
+
         Map<String, String> resp = timeService.getTime();
         String time = resp.get("servertime");
 
         String greeting = greetingService.getGreeting();
 
-        return "The server says : " + greeting + ". Server time is " + time + "<br/>User JWT Token: " + getToken(principal);
+        return "The server says : " + greeting + ". Server time is " + time;
     }
 
     @GetMapping("/jwt")
@@ -58,7 +63,7 @@ class GatewayAppController {
             DefaultOidcUser user = (DefaultOidcUser) authentication.getPrincipal();
             OidcIdToken idToken = user.getIdToken();
 
-            return idToken.getTokenValue();
+            return "User = "+ user.getUserInfo().getSubject() + " , Token = " + idToken.getTokenValue();
         }
 
         return "NONE";
