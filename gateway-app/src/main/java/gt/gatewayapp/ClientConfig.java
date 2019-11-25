@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -20,8 +21,11 @@ public class ClientConfig {
     @Bean
     public RequestInterceptor requestTokenBearerInterceptor() {
         return requestTemplate -> {
-            //NOTE: hystrix.shareSecurityContext: true should be used to pass context
-            requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer " + getToken());
+            //NOTE: hystrix.shareSecurityContext: true should be used to pass token from SecurityContext
+            String token = getToken();
+            if (StringUtils.hasText(token)) {
+                requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            }
         };
     }
 
@@ -29,7 +33,10 @@ public class ClientConfig {
     @LoadBalanced
     RestTemplate buildTemplate(RestTemplateBuilder builder) {
         return builder.additionalInterceptors((rq, body, exe) -> {
-            rq.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + getToken());
+            String token = getToken();
+            if (StringUtils.hasText(token)) {
+                rq.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            }
             return exe.execute(rq, body);
         }).build();
     }
