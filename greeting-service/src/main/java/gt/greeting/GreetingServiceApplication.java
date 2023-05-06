@@ -18,7 +18,7 @@ public class GreetingServiceApplication {
 
     @RestController
     @RequestMapping("/api/greeting")
-    class API {
+    static class API {
 
         @GetMapping({"", "/"})
         public String getMessage() {

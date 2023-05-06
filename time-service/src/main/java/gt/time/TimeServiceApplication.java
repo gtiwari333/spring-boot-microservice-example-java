@@ -21,7 +21,7 @@ public class TimeServiceApplication {
 
     @RestController
     @RequestMapping("/api/time")
-    class API {
+    static class API {
 
         @GetMapping({"", "/"})
         public Map<String, String> getMessage() {

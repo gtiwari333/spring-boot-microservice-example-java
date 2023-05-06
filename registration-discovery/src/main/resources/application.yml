@@ -1,0 +1,13 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: registration-discovery
+
+eureka:
+  client:
+    registerWithEureka: false #do not register itself
+    fetchRegistry: false
+  server:
+    enableSelfPreservation: false

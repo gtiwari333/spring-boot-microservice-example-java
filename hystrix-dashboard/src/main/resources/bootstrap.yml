@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: hytrix-dashboard
-  cloud:
-    config:
-      uri: http://localhost:8888
-

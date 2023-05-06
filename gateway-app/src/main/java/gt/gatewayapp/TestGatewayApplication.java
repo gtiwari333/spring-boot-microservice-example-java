@@ -1,12 +1,13 @@
 package gt.gatewayapp;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableZuulProxy
 @EnableFeignClients
-@EnableCircuitBreaker
 public class TestGatewayApplication {
 
     public static void main(String[] args) {
@@ -64,18 +63,20 @@ public class TestGatewayApplication {
 @Service
 class GreetingService {
     private final RestTemplate restTemplate;
+    private final Logger log = LoggerFactory.getLogger(GreetingService.class);
 
     GreetingService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    @HystrixCommand(fallbackMethod = "getDefaultGreeting")
+    @CircuitBreaker(name = "getGreeting", fallbackMethod = "getDefaultGreeting")
     String getGreeting() {
         return restTemplate.getForObject("http://greeting-service/api/greeting/", String.class);
     }
 
-    private String getDefaultGreeting() {
-        return "Hello world";
+    public String getDefaultGreeting(Throwable t) {
+        log.error("Using fallback method due to exception ", t);
+        return "Hello world - Fallback";
     }
 
 }

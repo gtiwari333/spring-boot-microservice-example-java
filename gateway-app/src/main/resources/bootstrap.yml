@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: gateway-app
-  cloud:
-    config:
-      uri: http://localhost:8888
-
-

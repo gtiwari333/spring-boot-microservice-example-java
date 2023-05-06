@@ -1,13 +1,10 @@
-
-
 server:
   port: 8888
-
 spring:
+  application:
+    name: config-server
   cloud:
     config:
       server:
-        native:
-          search-locations: file:///${user.home}/IdeaProjects/spring-boot-microservice-example-java/configs/local
-  profiles:
-    active: native
+        git:
+          uri: https://github.com/gtiwari333/spring-boot-microservice-example-java.git
