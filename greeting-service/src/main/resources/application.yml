@@ -7,3 +7,11 @@ spring:
 
 server:
   port: 0
+
+springdoc:
+  api-docs:
+    resolve-schema-properties: false
+  show-actuator: true
+  swagger-ui:
+    try-it-out-enabled: false
+  writer-with-order-by-keys: true
