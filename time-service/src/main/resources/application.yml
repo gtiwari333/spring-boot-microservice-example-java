@@ -1,0 +1,29 @@
+spring:
+    application:
+        name: time-service
+    config:
+      import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+
+    security:
+      oauth2:
+        client:
+          provider:
+            oidc:
+              issuer-uri: http://localhost:8082/realms/spring-cloud-ms-ex
+          registration:
+            oidc:
+              client-id: time-service
+              client-secret: secret123
+              scope: openid, profile, email, offline_access # last one for refresh tokens
+
+
+server:
+  port: 0
+
+springdoc:
+  api-docs:
+    resolve-schema-properties: false
+  show-actuator: true
+  swagger-ui:
+    try-it-out-enabled: false
+  writer-with-order-by-keys: true

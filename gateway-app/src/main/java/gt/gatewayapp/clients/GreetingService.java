@@ -1,10 +1,12 @@
 package gt.gatewayapp.clients;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 public class GreetingService {
 
     private final RestTemplate restTemplate;
@@ -13,13 +15,13 @@ public class GreetingService {
         this.restTemplate = restTemplate;
     }
 
-    @HystrixCommand(fallbackMethod = "getDefaultGreeting")
+    @CircuitBreaker(name = "getGreeting", fallbackMethod = "getDefaultGreeting")
     public String getGreeting() {
         return restTemplate.getForObject("http://greeting-service/api/greeting/", String.class);
     }
 
-    private String getDefaultGreeting() {
-        return "Fallback Greeting";
+    public String getDefaultGreeting(Throwable t) {
+        log.error("Using fallback method due to exception ", t);
+        return "Hello world - Fallback";
     }
-
 }

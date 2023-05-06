@@ -1,23 +1,25 @@
 package gt.regdist;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-@EnableEurekaServer
+@EnableDiscoveryClient
 @SpringBootApplication
+@EnableAdminServer
 @Slf4j
-public class RegistrationAndDiscoveryApplication {
+public class DashboardApp {
 
     public static void main(String[] args) throws UnknownHostException {
 
-        SpringApplication app = new SpringApplication(RegistrationAndDiscoveryApplication.class);
+        SpringApplication app = new SpringApplication(DashboardApp.class);
         Environment env = app.run(args).getEnvironment();
 
         log.info("Access URLs:\n----------------------------------------------------------\n\t" +

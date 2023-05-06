@@ -1,0 +1,33 @@
+version: '3'
+# use `docker container prune` to prune old container data before upgrading version
+services:
+    keycloak:
+        image: 'quay.io/keycloak/keycloak:21.1.1'
+        container_name: keycloak_springms
+        command: ['start-dev --import-realm']
+        environment:
+            - KEYCLOAK_DB=dev-file
+            - KEYCLOAK_ADMIN=admin
+            - KEYCLOAK_ADMIN_PASSWORD=admin
+            - KEYCLOAK_FEATURES=scripts
+            - KEYCLOAK_HTTP_PORT=8080
+            - KEYCLOAK_HTTPS_PORT=9443
+#        entrypoint: /tmp/keycloak/config/docker-compose-entrypoint.sh --hostname host.docker.internal:8080
+        volumes:
+            - ./realm/:/opt/keycloak/data/import
+        ports:
+            - 8082:8080
+            - 9443:9443
+        networks:
+            - springmsnet
+volumes:
+    esdata1:
+        driver: local
+networks:
+    springmsnet:
+        driver: bridge
+
+
+#run using
+#docker-compose -f docker-compose.yml up
+# or just docker-compose up

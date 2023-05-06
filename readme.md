@@ -29,3 +29,7 @@ You can monitor the deployed service instances using Spring Eureka Web UI: `http
 View distributed tracing  `http://localhost:9411`
 
 Hystrix Dashboard Open `http://localhost:8788' and monitor gateway app stream  `http://localhost:8080/actuator/hystrix.stream`
+
+#### Auth with keycloak
+
+Checkout branch `keycloak-auth`
