@@ -1,14 +1,13 @@
 package gt.gatewayapp;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -35,10 +34,4 @@ public class TestGatewayApplication {
         );
     }
 
-    @Bean
-    @LoadBalanced
-        //this will search in the registry
-    RestTemplate restTemplate(RestTemplateBuilder rtb) {
-        return rtb.build();
-    }
 }

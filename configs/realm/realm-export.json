@@ -813,7 +813,7 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "dev.localhost.ionic:*",
+        "http://192.168.*",
         "http://127.0.0.1:*",
         "http://localhost:*",
         "https://127.0.0.1:*",
@@ -2715,7 +2715,7 @@
     "parRequestUriLifespan": "60",
     "clientSessionMaxLifespan": "0",
     "frontendUrl": "",
-    "acr.loa.map": "[]"
+    "acr.loa.map": "{}"
   },
   "keycloakVersion": "21.1.1",
   "userManagedAccessAllowed": false,

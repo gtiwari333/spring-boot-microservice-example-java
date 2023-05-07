@@ -21,7 +21,6 @@ public class ClientConfig {
     @Bean
     public RequestInterceptor requestTokenBearerInterceptor() {
         return requestTemplate -> {
-            //NOTE: hystrix.shareSecurityContext: true should be used to pass token from SecurityContext
             String token = getToken();
             if (StringUtils.hasText(token)) {
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
