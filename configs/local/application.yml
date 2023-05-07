@@ -5,8 +5,30 @@ eureka:
     service-url:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
 
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  health:
+    jms:
+      enabled: true
+
+
+springdoc:
+  api-docs:
+    resolve-schema-properties: false
+  show-actuator: true
+  swagger-ui:
+    try-it-out-enabled: false
+  writer-with-order-by-keys: true
