@@ -30,9 +30,10 @@ spring:
         provider:
           oidc:
             issuer-uri: http://localhost:8082/realms/spring-cloud-ms-ex
-          registration:
-            oidc:
-              client-id: time-service
+        registration:
+          oidc:
+            client-secret: secret123
+            scope: openid, profile, email, offline_access # last one for refresh tokens
 springdoc:
   api-docs:
     resolve-schema-properties: false
