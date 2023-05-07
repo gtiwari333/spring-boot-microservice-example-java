@@ -23,8 +23,16 @@ management:
   health:
     jms:
       enabled: true
-
-
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          oidc:
+            issuer-uri: http://localhost:8082/realms/spring-cloud-ms-ex
+          registration:
+            oidc:
+              client-id: time-service
 springdoc:
   api-docs:
     resolve-schema-properties: false
