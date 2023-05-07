@@ -1,7 +1,10 @@
-Download the latest and run the jar
+## Run Zipkin
 
-https://github.com/openzipkin/zipkin
+### Manually:
+    Download the latest and run the jar 
+    https://github.com/openzipkin/zipkin
 
-The default URL is http://localhost:9411
+### Using Docker-compose provided on /config folder
+    docker-compose up
 
-TODO: register zipkin with eureka service discovery
+Open zipkin URL http://localhost:9411 to view traces

@@ -41,19 +41,18 @@ public class GreetingServiceApplication {
 
     @RestController
     @RequestMapping("/api/greeting")
+    @Slf4j
     static class API {
 
         @GetMapping({"", "/"})
         public String getMessage(Principal p) {
-            return "Greetings from service -" + getUserName(p);
+            String username = getUserName(p);
+            log.info("Got request to get greeting message for " + username);
+            return "Greetings -" + username + " !!";
         }
 
         String getUserName(Principal p) {
-            Authentication authentication = (Authentication) p;
-
-            if (authentication instanceof JwtAuthenticationToken) {
-                JwtAuthenticationToken jwt = (JwtAuthenticationToken) authentication;
-
+            if (p instanceof JwtAuthenticationToken jwt) {
                 return jwt.getTokenAttributes().get("preferred_username") + "(" + jwt.getName() + ")";
             }
 

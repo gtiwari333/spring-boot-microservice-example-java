@@ -42,6 +42,7 @@ public class TimeServiceApplication {
 
     @RestController
     @RequestMapping("/api/time")
+    @Slf4j
     static class API {
 
         @Value("${app.timezone}")
@@ -49,6 +50,7 @@ public class TimeServiceApplication {
 
         @GetMapping({"", "/"})
         public Map<String, String> getMessage() {
+            log.info("Got request to get time");
             return Map.of("servertime", DateTimeFormatter.ISO_DATE_TIME.format(Instant.now().atZone(ZoneId.of(timezone))));
         }
 

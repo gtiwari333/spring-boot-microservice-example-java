@@ -15,6 +15,20 @@ spring:
             client-secret: secret123
             scope: openid, profile, email, offline_access # last one for refresh tokens
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  health:
+    jms:
+      enabled: true
+
+logging:
+    pattern:
+      level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 server:
   port: 0
 

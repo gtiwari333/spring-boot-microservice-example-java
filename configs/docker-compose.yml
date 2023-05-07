@@ -20,6 +20,13 @@ services:
             - 9443:9443
         networks:
             - springmsnet
+    zipkin:
+        image: 'openzipkin/zipkin'
+        container_name: zipkin
+        ports:
+            - 9411:9411
+        networks:
+            - springmsnet
 volumes:
     esdata1:
         driver: local
