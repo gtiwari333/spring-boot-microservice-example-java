@@ -1,5 +1,18 @@
 ## Microservice Example using Spring Boot and Spring Cloud.
 
+## Variations
+
+Master Branch: - Latest Spring Boot(3), Keycloak, Zipkin, Admin Server, etc
+
+
+#### Withtout security:
+- Spring Boot 2.3 https://github.com/gtiwari333/spring-boot-microservice-example-java/tree/SpringBoot-2.3
+- Spring Boot 2.7 https://github.com/gtiwari333/spring-boot-microservice-example-java/tree/SpringBoot-2.7
+
+#### With keycloak auth
+- Spring Boot 2.3 and Keycloak https://github.com/gtiwari333/spring-boot-microservice-example-java/tree/SpringBoot-2.3-Keycloak
+- Spring Boot 2.7 and Keycloak https://github.com/gtiwari333/spring-boot-microservice-example-java/tree/Spring2.7-Keycloak-Auth
+- Spring Boot 3 and Keycloak https://github.com/gtiwari333/spring-boot-microservice-example-java/tree/SpringBoot3-KeyCloakAuth
 
 ### It contains the following applications:
 
@@ -14,6 +27,8 @@
 - Config for local development are stored on configs/local/**
 
 ## How to Run
+
+Step 0) Change config URL (IF NECESSARY)
 
 Step 1) Start Keycloak and Zipkin using docker-compose. Navigate to /config and run `docker-compose up`
 
