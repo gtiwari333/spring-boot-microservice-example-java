@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
@@ -45,9 +46,10 @@ public class GreetingServiceApplication {
     static class API {
 
         @GetMapping({"", "/"})
-        public String getMessage(Principal p) {
+        public String getMessage(Principal p, @RequestParam("delayMs") int delayMs) throws InterruptedException {
             String username = getUserName(p);
-            log.info("Got request to get greeting message for " + username);
+            log.info("Got request to get greeting message for {}, sleeping for {} ms", username, delayMs);
+            Thread.sleep(delayMs);
             return "Greetings -" + username + " !!";
         }
 
@@ -55,7 +57,6 @@ public class GreetingServiceApplication {
             if (p instanceof JwtAuthenticationToken jwt) {
                 return jwt.getTokenAttributes().get("preferred_username") + "(" + jwt.getName() + ")";
             }
-
             return "N/A";
         }
 

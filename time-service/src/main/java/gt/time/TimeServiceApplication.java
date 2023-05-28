@@ -8,6 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
@@ -49,8 +50,9 @@ public class TimeServiceApplication {
         String timezone;
 
         @GetMapping({"", "/"})
-        public Map<String, String> getMessage() {
-            log.info("Got request to get time");
+        public Map<String, String> getMessage(@RequestParam("delayMs") int delayMs) throws InterruptedException {
+            log.info("Got request to get time, sleeping for {} ms", delayMs);
+            Thread.sleep(delayMs);
             return Map.of("servertime", DateTimeFormatter.ISO_DATE_TIME.format(Instant.now().atZone(ZoneId.of(timezone))));
         }
 

@@ -3,6 +3,7 @@ package gt.gatewayapp.clients;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -16,8 +17,9 @@ public class GreetingService {
     }
 
     @CircuitBreaker(name = "getGreeting", fallbackMethod = "getDefaultGreeting")
-    public String getGreeting() {
-        return restTemplate.getForObject("http://greeting-service/api/greeting/", String.class);
+    public String getGreeting(@RequestParam int delayMs) {
+        log.debug("Current thread :{}", Thread.currentThread().getName());
+        return restTemplate.getForObject("http://greeting-service/api/greeting?delayMs=" + delayMs, String.class);
     }
 
     public String getDefaultGreeting(Throwable t) {
