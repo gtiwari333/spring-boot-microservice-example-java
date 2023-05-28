@@ -41,3 +41,8 @@ springdoc:
   swagger-ui:
     try-it-out-enabled: false
   writer-with-order-by-keys: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
