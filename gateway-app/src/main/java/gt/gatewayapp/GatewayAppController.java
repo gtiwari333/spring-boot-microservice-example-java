@@ -45,13 +45,19 @@ class GatewayAppController {
         return "No auth needed to see this";
     }
 
-    @RequestMapping("/protected")
-    public String getGreeting() throws ExecutionException, InterruptedException {
+    @RequestMapping("/protected-using-future")
+    public String getGreetingUsingFutures() throws ExecutionException, InterruptedException {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("User auth object: {}", authentication);
 
-        var respF = supplyAsync(() -> timeService.getTime(RandomUtils.nextInt(5000)), asyncTaskExecutor);
-        var greetingF = supplyAsync(() -> greetingService.getGreeting(RandomUtils.nextInt(5000)), asyncTaskExecutor);
+        /*
+        TODO: Trace propagation is not working ... security token propagation is working fine
+         */
+
+        var respF = supplyAsync(() -> timeService.getTime(getDelayMs()), asyncTaskExecutor);
+        var greetingF = supplyAsync(() -> greetingService.getGreeting(getDelayMs()), asyncTaskExecutor);
+
+        greetingService.getGreeting(getDelayMs());
 
         CompletableFuture.allOf(greetingF, respF).join();
 
@@ -60,8 +66,29 @@ class GatewayAppController {
         return "The server says : " + greetingF.get() + ". Server time is " + time;
     }
 
+
+    @RequestMapping("/protected")
+    public String getGreeting() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("User auth object: {}", authentication);
+
+        var resp = timeService.getTime(getDelayMs());
+        var greeting = greetingService.getGreeting(getDelayMs());
+
+        greetingService.getGreeting(getDelayMs());
+
+        String time = resp.get("servertime");
+
+        return "The server says : " + greeting + ". Server time is " + time;
+    }
+
+    private static int getDelayMs() {
+        return RandomUtils.nextInt(5000);
+    }
+
     @RequestMapping("/async-test")
     void asyncTest() {
+        log.info("Got async request");
         asyncTestService.verifyAsyncWillAccessSecurityContext();
     }
 

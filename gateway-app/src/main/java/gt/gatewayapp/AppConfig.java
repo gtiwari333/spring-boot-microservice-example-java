@@ -1,5 +1,7 @@
 package gt.gatewayapp;
 
+import io.micrometer.tracing.Tracer;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,12 +18,20 @@ public class AppConfig {
     }
 
     @Bean
-    ThreadPoolTaskExecutor threadPoolTaskExecutor(){
+    ThreadPoolTaskExecutor taskExecutor(Tracer tracer) { //this will be the default one
         var executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(20);
         executor.setThreadNamePrefix("app-threadX");
         executor.initialize();
+        executor.setTaskDecorator(runnable -> () -> {
+            try {
+                MDC.setContextMap(MDC.getCopyOfContextMap());
+                runnable.run();
+            } finally {
+                MDC.clear();
+            }
+        });
         return executor;
     }
 
@@ -29,7 +39,7 @@ public class AppConfig {
      * AsyncTaskExecutor(DelegatingSecurityContextAsyncTaskExecutor) bean can be used to pass ThreadLocal + SecurityContext in Future<></>
      */
     @Bean
-    DelegatingSecurityContextAsyncTaskExecutor asyncTaskExecutor(ThreadPoolTaskExecutor ex){
+    DelegatingSecurityContextAsyncTaskExecutor asyncTaskExecutor(ThreadPoolTaskExecutor ex) {
         return new DelegatingSecurityContextAsyncTaskExecutor(ex);
     }
 }
