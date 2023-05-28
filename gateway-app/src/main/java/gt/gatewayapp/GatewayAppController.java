@@ -2,8 +2,9 @@ package gt.gatewayapp;
 
 import gt.gatewayapp.clients.GreetingService;
 import gt.gatewayapp.clients.TimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -17,22 +18,21 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
+@Slf4j
+@RequiredArgsConstructor
 class GatewayAppController {
     private final GreetingService greetingService;
     private final TimeService timeService;
-
-    static final Logger log = LoggerFactory.getLogger(GatewayAppController.class);
-
-    GatewayAppController(GreetingService greetingService, TimeService timeService) {
-        this.greetingService = greetingService;
-        this.timeService = timeService;
-    }
+    private final AsyncTestService asyncTestService;
 
     @RequestMapping({"/", ""})
     public String home() {
         return "Hello !<br/>" +
                 "<a href='/protected'> Protected Service   </a> <br/>" +
-                "<a href='/public'> Public   </a>  ";
+                "<a href='/public'> Public   </a>  <br/> " +
+                "<a href='/account'> View Full User Account Info   </a>  <br/> " +
+                "<a href='/jwt'> View Jwt Auth Token   </a>   <br/>";
+
     }
 
     @RequestMapping("/public")
@@ -52,6 +52,11 @@ class GatewayAppController {
         String greeting = greetingService.getGreeting();
 
         return "The server says : " + greeting + ". Server time is " + time;
+    }
+
+    @RequestMapping("/async-test")
+    void asyncTest() {
+        asyncTestService.verifyAsyncWillAccessSecurityContext();
     }
 
     @GetMapping("/jwt")
